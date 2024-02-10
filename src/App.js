@@ -15,8 +15,8 @@ function App() {
     const [isNameOpen, setIsNameOpen] = useState(true);
 
     useEffect(() => {
-        console.log(playerNames)
-        console.log('l;l')
+        // console.log(playerNames)
+        // console.log('l;l')
         // if (playerName !== 'anonymous' && playerName !== undefined) {
         //     setIsNameOpen(false)
         // }

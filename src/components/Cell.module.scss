@@ -1,0 +1,28 @@
+@import './../App';
+
+.cell {
+  width: clamp(20px,4vw,60px);
+  height: clamp(20px,4vw,60px);
+  border: 1px solid $global-black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+  font-size: 30px;
+  cursor: pointer;
+  background-color: $global-second-green;
+
+  &_revealed {
+    font-size: clamp(15px,4vw,50px);
+    background-color: $global-green;
+  }
+
+  &_flagged::before {
+    content: "🚩";
+  }
+}
+
+.bomb {
+  width: 5px;
+  height: 6px;
+}
