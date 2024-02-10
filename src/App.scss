@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+$global-white: #ffffff;
+$global-black: #000000;
+$global-yellow: #F2E7AC;
+$global-second-yellow: #F2EAC2;
+$global-third-yellow: #f6f1df;
+$global-green: #D9D162;
+$global-second-green: #778C4A;
+$global-orange: #F28705;
+$global-red: #e81212;
+
+$global-font: 'Roboto', sans-serif;
+$global-font-style: normal;
+$global-font-weight: 400;
+
+$screen-tab-1920: 1920px;
+$screen-tab-1366: 1366px;
+$screen-tab-1024: 1024px;
+$screen-tab-768: 768px;
+$screen-tab-320: 320px;
+
+body {
+  background-color: $global-yellow;
+}
+
+.App {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 1vw auto 1vw ;
+
+    font-family: $global-font;
+    font-stretch: $global-font-style;
+    font-weight: $global-font-weight;
+  }
+
+
+  &__header {
+    display: flex;
+font-size: clamp(50px,3vw ,100px );
+    margin: 0 auto;
+    //margin-top: 10vh;
+    //margin-bottom: 5vh;
+
+  }
+
+  //&__main {
+  //  display: flex;
+  //  flex-direction: row;
+  //  gap: clamp(30px, 8vw, 120px);
+  //  max-width: 1800px;
+  //  margin: 0 auto;
+  //}
+  //
+  //&__img {
+  //  width: clamp(60px, 10vw, 90px);
+  //  height: clamp(60px, 10vw, 90px);
+  //  position: relative;
+  //  top: clamp(20px, 4vw, 80px);
+  //}
+}
+
+//@media screen and (max-width: $screen-tab-1920) {
+//  .App {
+//    //width: 1920px;
+//  }
+//}
+//
+//@media screen and (min-width: $screen-tab-1366) {
+//  //.container {
+//  //  &__sorting {
+//  //    margin-bottom: 30px;
+//  //  }
+//  //
+//  //  &__main {
+//  //    flex-direction: column;
+//  //    align-items: center;
+//  //  }
+//  //}
+//}
+//
+//@media screen and (max-width: $screen-tab-1024) {
+//  //.container {
+//  //  &__main {
+//  //    flex-direction: column;
+//  //    align-items: center;
+//  //  }
+//  //}
+//}
+//
+//@media screen and (min-width: $screen-tab-1024) {
+//  //.container {
+//  //  &__main {
+//  //    gap: clamp(20px, 2vw, 50px);
+//  //
+//  //  }
+//  //}
+//}

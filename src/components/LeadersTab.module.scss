@@ -1,0 +1,30 @@
+@use './SettingsTab.module' as SettingsTab;
+@import './../App';
+
+
+.leaders {
+  &__tab {
+    @include SettingsTab.overlay;
+
+    &_open {
+      display: flex;
+    }
+
+    &_close {
+      position: absolute;
+      right: 10px;
+      top: 5px;
+    }
+  }
+
+  &__content {
+    @include SettingsTab.content;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: center;
+    font-size: clamp(30px,3vw,60px);
+  }
+
+}

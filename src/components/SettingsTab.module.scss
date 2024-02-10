@@ -1,0 +1,94 @@
+@import './../App';
+
+@mixin overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.15); /* Оверлей с затемнением */
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: $global-white;
+  //padding: 20px;
+  padding: clamp(30px, 3vw, 50px);
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  width: clamp(280px, 80%, 500px);
+  height: clamp(300px, 80%, 400px);
+  position: relative;
+}
+
+.difficulty {
+  &__tab {
+    @include overlay;
+
+    &_open {
+      display: flex;
+    }
+
+    &_close {
+      position: absolute;
+      right: 10px;
+      top: 5px;
+    }
+  }
+
+  &__content {
+@include content;
+    min-height: max-content;
+  }
+
+  &__button {
+    background-color: $global-white;
+    padding: 8px;
+    border-radius: 3px;
+    box-shadow: $global-black 5px;
+font-size: clamp(20px,3vw ,40px);
+
+    &_selected {
+      background-color: $global-second-green;
+    }
+
+    &:hover {
+    background-color: $global-green;
+    }
+    &:active,:focus {
+      background-color: $global-second-green;
+    }
+  }
+
+  &__customTab {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    &_open {
+      display: flex;
+    }
+  }
+
+  &__params {
+    display: flex;
+    align-items: center;
+  }
+
+  &__input {
+    background-color: $global-second-yellow;
+    width: 50px;
+    margin-left: 10px;
+    padding: 5px;
+    border-radius: 2px;
+    //display: flex;
+    //justify-items: center;
+  }
+}

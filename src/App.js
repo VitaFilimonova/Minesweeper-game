@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useState} from 'react';
+import './reset.scss';
+import './App.scss';
+import SettingsTab from "./components/SettingsTab";
+import Board from "./components/Board";
+import LeadersTab from "./components/LeadersTab";
+import NameTab from "./components/NameTab";
+import {useSelector} from "react-redux";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const playerNames = useSelector((state) => state.playerName)
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+    const [isLeadersOpen, setIsLeadersOpen] = useState(false);
+    const [isNameOpen, setIsNameOpen] = useState(true);
+
+    useEffect(() => {
+        console.log(playerNames)
+        console.log('l;l')
+        // if (playerName !== 'anonymous' && playerName !== undefined) {
+        //     setIsNameOpen(false)
+        // }
+    }, [playerNames]);
+
+    return (
+        <div className="App">
+            <div className="App__container">
+                <NameTab/>
+                <h1 className="App__header">Minesweeper</h1>
+                <button onClick={() => setIsSettingsOpen(true)}>Settings</button>
+                {isSettingsOpen && <SettingsTab open={true} setOpen={setIsSettingsOpen}/>}
+                <button onClick={() =>setIsLeadersOpen(true)}>Leaders</button>
+                {isLeadersOpen && <LeadersTab open={true} setOpen={setIsLeadersOpen}/>}
+                <button onClick={() => setIsNameOpen(true)}>Change name</button>
+                {isNameOpen && <NameTab open={true} setOpen={setIsNameOpen}/>}
+                <Board/>
+
+            </div>
+        </div>
+    );
 }
 
 export default App;

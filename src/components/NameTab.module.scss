@@ -1,0 +1,52 @@
+@use './SettingsTab.module' as SettingsTab;
+@import './../App';
+
+.name {
+  &__tab {
+    @include SettingsTab.overlay;
+
+    &_close {
+      position: absolute;
+      right: 10px;
+      top: 5px;
+    }
+
+    &_open {
+      display: flex;
+    }
+  }
+
+  &__content {
+    @include SettingsTab.content;
+    gap: 15px;
+    width: clamp(200px, 60%, 300px);
+    height: clamp(160px, 45vw, 160px);
+    padding: clamp(20px, 2vw, 30px);
+    //justify-content: space-between;
+  }
+
+  &__error {
+    color: $global-red;
+    font-size: 10px;
+    display: flex;
+    margin: -5px 0;
+  }
+
+  &__input {
+    background-color: $global-third-yellow;
+    padding: 8px;
+    border-radius: 5px;
+  }
+
+  &__buttonSave {
+    background-color: $global-orange;
+    padding: 5px;
+    border-radius: 5px;
+    width: 80px;
+    margin: 0 auto;
+
+    &:disabled {
+      background-color: rgba(0, 0, 0, 0.15);
+    }
+  }
+}
