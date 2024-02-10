@@ -21,7 +21,7 @@ const Timer = ({ gameOver, sendTime }) => {
             incrementTime();
         }, 1000);
         if (gameOver) {
-            //   let updatedTime = JSON.parse(JSON.stringify(time));
+              // let updatedTime = JSON.parse(JSON.stringify(time));
 
             clearInterval(timeIntervalId);
         }

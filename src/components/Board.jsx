@@ -8,7 +8,7 @@ import Timer from "./Timer";
 
 const Board = () => {
     const [board, setBoard] = useState([])
-    let mines = []
+    const [mines, setMines] = useState([])
     const [nonMinesNumber, setNonMinesNumber] = useState(0);
     const [restart, setRestart] = useState(false);
     const [gameOver, setGameOver] = useState(false);
@@ -19,23 +19,23 @@ const Board = () => {
             const getBoard = createBoard();
             // setNonMinesCount(100 - 20);
             setTime(0);
-            // setBoard(getBoard.board);
-            // setMineLocations(getBoard.mineLocation);
+            setBoard(getBoard.newBoard);
+            setMines(getBoard.mines);
             setGameOver(false);
             setRestart(false);
         };
         generateBoard();
 
-    }, [rows, columns, minesNumber, restart, setRestart]);
+    }, [rows, columns, minesNumber, restart]);
 
     function createBoard() {
         const newBoard = Array.from({length: rows}, (_, rowIndex) =>
             Array.from({length: columns}, (_, colIndex) => ({
                 value: 0,
                 revealed: false,
-                isMine: false,
                 row: rowIndex,
                 column: colIndex,
+                flagged: false,
             }))
         );
 
@@ -87,10 +87,10 @@ const Board = () => {
         }
 
         console.log(newBoard)
-        return setBoard(newBoard);
+        return {newBoard, mines};
     }
 
-    const revealed = (arr, x, y, newNonMinesCount) => {
+    const revealed = (arr, x, y, newNonMinesNum) => {
         if (arr[x][y].revealed) return;
 
         const neighbors = [
@@ -106,7 +106,7 @@ const Board = () => {
             const cell = arr[cx][cy];
 
             if (!cell.revealed) {
-                newNonMinesCount--;
+                newNonMinesNum--;
                 cell.revealed = true;
             }
 
@@ -126,7 +126,7 @@ const Board = () => {
             }
         }
 
-        return {arr, newNonMinesCount};
+        return {arr, newNonMinesNum};
     };
 
 
@@ -146,7 +146,7 @@ const Board = () => {
                 return;
             }
             setBoard(newBoardValues.arr);
-            setNonMinesNumber(newBoardValues.newNonMinesNumber);
+            setNonMinesNumber(newBoardValues.newNonMinesNum);
         }
     };
 
@@ -155,14 +155,18 @@ const Board = () => {
         let newBoardValues = JSON.parse(JSON.stringify(board));
         newBoardValues[row][col].flagged = !newBoardValues[row][col].flagged;
         setBoard(newBoardValues);
+        console.log(board)
     };
 
     return (
         <div>
             {gameOver && <LoseTab reset={setRestart} completeTime={time}/>}
+            <div className={style.board__header}>
+                <p>💥{}</p>
             <button className={style.board__button} onClick={() => setRestart(true)}>
             </button>
             <Timer gameOver={gameOver} sendTime={setTime}/>
+            </div>
             {/*<TopBar gameOver={gameOver} setTime={setTime} newTime={newTime} />*/}
             {board.map((row, index) => {
                 return (
@@ -176,6 +180,7 @@ const Board = () => {
                                     y={indexOneCell}  // передаем координаты y
                                     updateBoard={updateBoard}
                                     flagCell={flagCell}
+                                    reset={restart}
                                 />
                             )
                         })

@@ -14,25 +14,27 @@ function App() {
     const [isLeadersOpen, setIsLeadersOpen] = useState(false);
     const [isNameOpen, setIsNameOpen] = useState(true);
 
-    useEffect(() => {
-        // console.log(playerNames)
-        // console.log('l;l')
-        // if (playerName !== 'anonymous' && playerName !== undefined) {
-        //     setIsNameOpen(false)
-        // }
-    }, [playerNames]);
+    // useEffect(() => {
+    //     // console.log(playerNames)
+    //     // console.log('l;l')
+    //     // if (playerName !== 'anonymous' && playerName !== undefined) {
+    //     //     setIsNameOpen(false)
+    //     // }
+    // }, [playerNames]);
 
     return (
         <div className="App">
             <div className="App__container">
                 <NameTab/>
-                <h1 className="App__header">Minesweeper</h1>
-                <button onClick={() => setIsSettingsOpen(true)}>Settings</button>
+                <h1 className="App__header">💣Minesweeper💣</h1>
+                <div className="App__buttons">
+                <button className="App__button" onClick={() => setIsSettingsOpen(true)}>Settings</button>
                 {isSettingsOpen && <SettingsTab open={true} setOpen={setIsSettingsOpen}/>}
-                <button onClick={() =>setIsLeadersOpen(true)}>Leaders</button>
+                <button className="App__button" onClick={() =>setIsLeadersOpen(true)}>Leaders</button>
                 {isLeadersOpen && <LeadersTab open={true} setOpen={setIsLeadersOpen}/>}
-                <button onClick={() => setIsNameOpen(true)}>Change name</button>
+                <button className="App__button" onClick={() => setIsNameOpen(true)}>Change name</button>
                 {isNameOpen && <NameTab open={true} setOpen={setIsNameOpen}/>}
+                </div>
                 <Board/>
 
             </div>

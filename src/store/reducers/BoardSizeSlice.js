@@ -5,7 +5,7 @@ const initialState = {
     rows: 8,
     columns: 8,
     minesNumber: 10,
-
+    mode: 'easy'
 }
 
 export const boardSizeSlice = createSlice({
@@ -16,20 +16,20 @@ export const boardSizeSlice = createSlice({
             state.rows = action.payload.rows
             state.columns = action.payload.columns
             state.minesNumber = action.payload.minesNumber
-
+            state.mode = action.payload.mode
         },
 
         // updateValues: (state, action) => {
-            // Заменяем текущее состояние новыми данными
+        // Заменяем текущее состояние новыми данными
 
-            // state.co2 = Math.ceil(action.payload.co2);
-            // if (!isNaN(state.temp)) {
-            //     // Округляем temp до одного знака после запятой
-            //     state.temp = state.temp.toFixed(1);
-            // }
-            // state.temp > 27
-            //     ? state.tempError = true
-            //     : state.tempError = false
+        // state.co2 = Math.ceil(action.payload.co2);
+        // if (!isNaN(state.temp)) {
+        //     // Округляем temp до одного знака после запятой
+        //     state.temp = state.temp.toFixed(1);
+        // }
+        // state.temp > 27
+        //     ? state.tempError = true
+        //     : state.tempError = false
 
         // },
 

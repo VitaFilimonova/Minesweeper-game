@@ -7,28 +7,30 @@ const MAX_ROWS = 32;
 const MAX_COLUMNS = 16;
 const MAX_MINES = 100;
 const SettingsTab = ({open, setOpen}) => {
-    const [difficulty, setDifficulty] = useState({rows: 0, cols: 0, mines: 0})
+
     const [showCustomTab, setShowCustomTab] = useState(false)
-    const {rows: width, columns: height, minesNumber} = useSelector((state) => state.boardSizeReducer)
+    const {rows: width, columns: height, minesNumber, mode} = useSelector((state) => state.boardSizeReducer)
+    const [difficulty, setDifficulty] = useState({rows: width, cols: height, mines: minesNumber})
     const dispatch = useDispatch()
-    const [selectedButton, setSelectedButton] = useState('easy'); // Состояние для хранения выбранной кнопки
+    const [selectedButton, setSelectedButton] = useState(mode); // Состояние для хранения выбранной кнопки
     const buttonsData = [
-        {name: 'easy', text: 'Easy 8×8', params: {rows: 8, cols: 8, mines: 10}},
-        {name: 'normal', text: 'Normal 16×16', params: {rows: 16, cols: 16, mines: 30}},
-        {name: 'hard', text: 'Hard 32×16', params: {rows: 32, cols: 16, mines: 100}},
+        {name: 'easy', text: 'Easy 8×8, 10 mines', params: {rows: 8, cols: 8, mines: 10}},
+        {name: 'normal', text: 'Normal 16×16, 40 mines', params: {rows: 16, cols: 16, mines: 30}},
+        {name: 'hard', text: 'Hard 32×16, 100 mines', params: {rows: 32, cols: 16, mines: 100}},
         {name: 'custom', text: 'Custom mode'}
     ];
 
     useEffect(() => {
         const updatedBoardSize = {
-            rows: parseInt(difficulty.rows),
-            columns: parseInt(difficulty.cols),
-            minesNumber: parseInt(difficulty.mines)
+            rows: difficulty.rows,
+            columns: difficulty.cols,
+            minesNumber: difficulty.mines,
+            mode: selectedButton
         };
         dispatch(updateBoard(updatedBoardSize));
         console.log(difficulty)
-        console.log(width, height, minesNumber)
-    }, [difficulty, dispatch]);
+        console.log(width, height, minesNumber, mode)
+    }, [difficulty, selectedButton]);
 
     function setDifficultyLevel(param) {
         setDifficulty({rows: param.rows, cols:  param.cols, mines: param.mines})
@@ -82,7 +84,7 @@ const SettingsTab = ({open, setOpen}) => {
                                onChange={(event) => setDifficultyParam('mines', event.target.value)}/>
                     </div>
                 </div>
-
+                {/*<button className={style.difficulty__updateButton} >Update board</button>*/}
             </div>
         </div>
     );

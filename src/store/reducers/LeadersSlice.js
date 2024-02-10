@@ -3,7 +3,8 @@ import {useEffect} from "react";
 
 const initialState = {
     playerName: localStorage.getItem("playerName") || localStorage.setItem("playerName", "anonymous"),
-    error: ''
+    error: '',
+    playMode: 'easy',
 }
 
 export const leadersSlice = createSlice({

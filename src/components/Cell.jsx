@@ -1,109 +1,41 @@
-// import React from 'react';
-// import style from './Cell.module.scss'
-// const Cell = ({data, updateBoard, flagCell}) => {
-//     // const style = {
-//     //     block: {
-//     //
-//     //         color: numColorCode(data.value),
-//     //
-//     //
-//     //         background: data.revealed
-//     //             ? data.value === "X"
-//     //                 ? 'red'
-//     //                 : bombChexPattern(data.x, data.y)
-//     //             : chexPattern(data.x, data.y),
-//     //     },
-//     // };
-//     const onClickUpdate = (e) => {
-//         if (data.flagged) {
-//             return;
-//         }
-//         console.log(e.type);
-//         updateBoard(data.x, data.y);
-//     };
-//
-//     const onClickFlag = (e) => {
-//         e.preventDefault();
-//         flagCell(data.x, data.y);
-//     };
-//
-//     return (
-//         <div
-//             className={style.cell}
-//             onClick={(e) => onClickUpdate(e)}
-//             onContextMenu={(e) => onClickFlag(e)}
-//         >
-//             {data.flagged && !data.revealed ? (
-//                 "🚩"
-//             ) : data.revealed && data.value !== 0 ? (
-//                 data.value === "X" ? (
-//                     'Xxx'
-//                 ) : (
-//                     data.value
-//                 )
-//             ) : (
-//                 ""
-//             )}
-//         </div>
-//     );
-// }
-//
-// const chexPattern = (x, y) => {
-//     if (x % 2 === 0 && y % 2 === 0) {
-//         return "#aad751";
-//     } else if (x % 2 === 0 && y % 2 !== 0) {
-//         return "#a2d249";
-//     } else if (x % 2 !== 0 && y % 2 === 0) {
-//         return "#a2d249";
-//     } else {
-//         return "#aad751";
-//     }
-// };
-//
-// const bombChexPattern = (x, y) => {
-//     if (x % 2 === 0 && y % 2 === 0) {
-//         return "#e5c29f";
-//     } else if (x % 2 === 0 && y % 2 !== 0) {
-//         return "#d7b899";
-//     } else if (x % 2 !== 0 && y % 2 === 0) {
-//         return "#d7b899";
-//     } else {
-//         return "#e5c29f";
-//     }
-// };
-//
-// const numColorCode = (num) => {
-//     if (num === 1) {
-//         return "#1976d2";
-//     } else if (num === 2) {
-//         return "#388d3c";
-//     } else if (num === 3) {
-//         return "#d33030";
-//     } else if (num === 4) {
-//         return "#7c21a2";
-//     } else if (num === 5) {
-//         return "#1976d2";
-//     } else if (num === 6) {
-//         return "#1976d2";
-//     } else {
-//         return "white";
-//     }
-// };
-//
-// export default Cell;
-
-
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import style from './Cell.module.scss'
 
-const Cell = ({data, x, y, updateBoard, flagCell}) => {
+const Cell = ({data, x, y, updateBoard, flagCell, reset}) => {
     const {revealed, value, flagged} = data;
 
+    const [cellState, setCellState] = useState("hidden"); // Состояние клетки: "hidden", "flagged", "questionMark"
+
+    useEffect(() => {
+        setCellState("hidden"); // Возвращаем клетку в исходное скрытое состояние
+    }, [reset]);
     const handleClick = (e) => {
-        if (e.button === 0 && !flagged) { // left click
-            updateBoard(x, y, e);
-        } else if (e.button === 2) { // right click
-            flagCell(x, y);
+        // e.preventDefault();
+        if (data.flagged) {
+            return;
+        }
+        console.log(e.type);
+        updateBoard(x, y);
+    };
+    const handleRightClick = (e) => {
+        e.preventDefault(); // Предотвращаем стандартное контекстное меню браузера
+        if (!revealed) {
+            switch (cellState) {
+                case "hidden":
+                    flagCell(x, y);
+                    setCellState("flagged");
+                    break;
+                case "flagged":
+                    flagCell(x, y, "questionMark");
+                    setCellState("questionMark");
+                    break;
+                case "questionMark":
+                    flagCell(x, y, null);
+                    setCellState("hidden");
+                    break;
+                default:
+                    break;
+            }
         }
     };
 
@@ -130,15 +62,27 @@ const Cell = ({data, x, y, updateBoard, flagCell}) => {
         }
     };
 
-
     return (
         <div
-            className={`${style.cell} ${revealed ? style.cell_revealed : ''} ${flagged ? style.cell_flagged : ''}`}
+            className={`${style.cell} ${revealed ? style.cell_revealed : ''} `}
             style={{color: numColorCode(value)}}
             onClick={handleClick}
-            onContextMenu={(e) => e.preventDefault()}
+            onContextMenu={handleRightClick}
+            onMouseDown={(e) => {
+                if (e.button === 1) handleRightClick(e);
+            }}
         >
-            {revealed ? (value === "X" ? "v" : value === 0 ? "" : value) : null}
+
+            {data.revealed ? (
+                data.value === "X" ? (
+                    "💣"
+                ) : (
+                    data.value === 0 ? "" : data.value
+                )
+            ) : (
+                cellState === "flagged" ? "🚩" :
+                    cellState === "questionMark" ? "❔" : ""
+            )}
         </div>
     );
 };
