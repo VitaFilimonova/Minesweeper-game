@@ -1,15 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import style from './Cell.module.scss'
-import {updateName} from "../store/reducers/LeadersSlice";
+import {updateName} from "../store/reducers/leadersSlice";
+import {useSelector} from "react-redux";
 
 const Cell = ({data, x, y, updateBoard, flagCell, reset, updateFlags, gameOver}) => {
     const {revealed, value, flagged} = data;
-
+    const { mode} = useSelector((state) => state.boardSizeReducer)
     const [cellState, setCellState] = useState("hidden"); // Состояние клетки: "hidden", "flagged", "questionMark"
 
     useEffect(() => {
         setCellState("hidden"); // Возвращаем клетку в исходное скрытое состояние
-    }, [reset]);
+    }, [reset,mode]);
     const handleClick = (e) => {
         // e.preventDefault();
         if (data.flagged || gameOver) {

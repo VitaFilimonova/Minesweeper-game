@@ -20,8 +20,12 @@
     @include SettingsTab.content;
     gap: 15px;
     width: clamp(200px, 60%, 300px);
-    height: clamp(160px, 45vw, 160px);
+    min-height: 168px;
+    //height: clamp(300px, 80%, 400px);
+    height: auto;
+    max-height: 400px;
     padding: clamp(20px, 2vw, 30px);
+    font-size: clamp(20px, 3vw, 28px);;
     //justify-content: space-between;
   }
 
@@ -36,6 +40,7 @@
     background-color: $global-third-yellow;
     padding: 8px;
     border-radius: 5px;
+    font-size: clamp(15px,2vw,25px);
   }
 
   &__buttonSave {

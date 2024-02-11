@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import style from './Timer.module.scss'
-const Timer = ({ gameOver, sendTime, gameStarted, restart }) => {
-    let [time, setTime] = useState(0);
+import {useSelector} from "react-redux";
 
+const Timer = ({gameOver, sendTime, gameStarted, restart}) => {
+    let [time, setTime] = useState(0);
+    const { mode} = useSelector((state) => state.boardSizeReducer)
     // Эффект для отслеживания старта игры и обновления таймера
     useEffect(() => {
         let timeIntervalId;
@@ -19,11 +21,11 @@ const Timer = ({ gameOver, sendTime, gameStarted, restart }) => {
 
     // Эффект для сброса таймера при рестарте
     useEffect(() => {
-        if (restart) {
+        if (restart || mode) {
             setTime(0); // Сбрасываем таймер
             sendTime(0); // Отправляем сброшенное время, если нужно
         }
-    }, [restart, sendTime]);
+    }, [restart, sendTime, mode]);
 
     // Эффект для отправки текущего времени во внешний стейт
     useEffect(() => {
@@ -31,13 +33,14 @@ const Timer = ({ gameOver, sendTime, gameStarted, restart }) => {
     }, [time, sendTime]);
 
     return (
-        <div className={style.timer} >
-<span className={style.timer__img}>
-    ⏰
-</span>
-        { time}
-        </div>
-    );
+        <div className={style.timer}>
+            <span className={style.timer__img}>
+                ⏰
+            </span>
+            <div className={style.timer__digits}>
+                {time}
+            </div>
+        </div>);
 };
 
 export default Timer;

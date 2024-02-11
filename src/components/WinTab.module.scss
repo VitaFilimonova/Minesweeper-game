@@ -1,12 +1,11 @@
-@use './SettingsTab.module' as SettingsTab;
 @import './../App';
 
-.lose {
+.win {
   &__tab {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: $global-red;
+    color: $global-white;
     font-size: clamp(20px, 3vw, 40px);
     padding: 5px;
     border: 5px solid $global-red;

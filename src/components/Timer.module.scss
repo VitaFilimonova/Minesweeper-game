@@ -2,14 +2,21 @@
 
 
 .timer {
-  color: $global-white;
+  color: $global-black;
   font-size: clamp(22px,3vw,42px);
-  width: clamp(60px,11vw,100px);
+  //width: 100px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   &__img {
-    padding-right: 5px;
+    //padding-right: 5px;
     font-size: clamp(20px,3vw,40px);
+  }
+
+  &__digits {
+    width: 40px; // Фиксированная ширина для цифр таймера
+    height: clamp(20px,3vw,40px);
+    text-align: right; // Выравнивание текста по правому краю
   }
 }

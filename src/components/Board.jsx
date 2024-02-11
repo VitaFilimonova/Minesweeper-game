@@ -3,8 +3,9 @@ import style from './Board.module.scss'
 import Cell from "./Cell";
 import {useSelector} from "react-redux";
 import LoseTab from "./LoseTab";
-import {updateBoard} from "../store/reducers/BoardSizeSlice";
+import {updateBoard} from "../store/reducers/boardSizeSlice";
 import Timer from "./Timer";
+import WinTab from "./WinTab";
 
 const Board = () => {
     const [board, setBoard] = useState([])
@@ -12,25 +13,31 @@ const Board = () => {
     const [nonMinesNumber, setNonMinesNumber] = useState(0);
     const [restart, setRestart] = useState(false);
     const [gameOver, setGameOver] = useState(false);
-    const {rows, columns, minesNumber} = useSelector((state) => state.boardSizeReducer)
+    const [gameWinOver, setGameWinOver] = useState(false);
+    const {rows, columns, minesNumber, mode} = useSelector((state) => state.boardSizeReducer)
     const [time, setTime] = useState(0);
     const [gameStarted, setGameStarted] = useState(false);
-
+    const playerName = useSelector((state) => state.playerNameReducer.playerName)
+    const [flagsCount, setFlagsCount] = useState(0);
+    const [bombsCount, setBombsCount] = useState(minesNumber - flagsCount);
 
     useEffect(() => {
         const generateBoard = () => {
             const getBoard = createBoard();
-            setNonMinesNumber(rows*columns - minesNumber);
+            setNonMinesNumber(rows * columns - minesNumber);
             setTime(0);
             setFlagsCount(0)
             setBoard(getBoard.newBoard);
             setMines(getBoard.mines);
             setGameOver(false);
+            setGameWinOver(false);
             setRestart(false);
+
+            setGameStarted(false); // Сбрасываем флаг начала игры
         };
         generateBoard();
 
-    }, [rows, columns, minesNumber, restart]);
+    }, [rows, columns, minesNumber, mode, restart, setRestart]);
 
     function createBoard() {
         const newBoard = Array.from({length: rows}, (_, rowIndex) =>
@@ -139,7 +146,7 @@ const Board = () => {
         let newBoardValues = JSON.parse(JSON.stringify(board));
         let newNonMinesNumber = nonMinesNumber;
 
-        if (!gameOver && !gameStarted) {
+        if (!gameOver && !gameStarted  ) {
             setGameStarted(true); // Начинаем игру при первом открытии клетки
         }
 
@@ -165,12 +172,9 @@ const Board = () => {
             setBoard(newBoardValues.arr);
             setNonMinesNumber(newBoardValues.newNonMinesNum);
         }
+
     };
 
-
-
-    const [flagsCount, setFlagsCount] = useState(0);
-    const [bombsCount, setBombsCount] = useState(minesNumber- flagsCount);
 
     useEffect(() => {
 
@@ -179,8 +183,8 @@ const Board = () => {
 
     }, [flagsCount, setFlagsCount]);
     useEffect(() => {
-        setBombsCount(minesNumber-flagsCount)
-    }, [flagsCount, minesNumber,setFlagsCount]);
+        setBombsCount(minesNumber - flagsCount)
+    }, [flagsCount, minesNumber, setFlagsCount]);
     const flagCell = (row, col) => {
         setBoard(prevBoard => {
             // Копируем доску для иммутабильного обновления
@@ -193,56 +197,105 @@ const Board = () => {
             const newFlagsCount = newBoard.flat().filter(cell => cell.flagged).length;
             setFlagsCount(newFlagsCount);
 
+            if (newFlagsCount > 0 && !gameStarted) {
+                setGameStarted(true);
+            }
             // Возвращаем обновленную доску
             return newBoard;
         });
     };
 
     const updateFlags = (flagged) => {
-        setFlagsCount(prevFlagsCount =>  prevFlagsCount - 1);
+        setFlagsCount(prevFlagsCount => prevFlagsCount - 1);
     };
 
-   function handleRestartButton () {
-       setRestart(true)
-       setGameOver(false);
-       setGameStarted(false); // Сбрасываем флаг начала игры
-       // setRestart(prev => !prev);
-   }
+    function handleRestartButton() {
+        setGameOver(false);
+        setGameWinOver(false);
+        setGameStarted(false); // Сбрасываем флаг начала игры
+        setRestart(true)
+    }
+
+
+    const checkWin = () => {
+        // Подсчитываем количество клеток без мин
+        const nonMineCellsCount = rows * columns - minesNumber;
+
+        // Подсчитываем количество правильно установленных флагов и количество открытых клеток
+        let correctlyFlaggedMinesCount = 0;
+        let openedCellsCount = 0;
+
+        board.forEach(row => {
+            row.forEach(cell => {
+                if (cell.revealed && cell.value !== "X") {
+                    openedCellsCount++;
+                }
+                if (cell.flagged && cell.value === "X") {
+                    correctlyFlaggedMinesCount++;
+                }
+            });
+        });
+
+        // Проверяем условия победы
+        // if (openedCellsCount === nonMineCellsCount ||
+        //     (correctlyFlaggedMinesCount === minesNumber && openedCellsCount + correctlyFlaggedMinesCount === nonMineCellsCount + minesNumber)) {
+        //     return true;
+        // }
+
+        if (gameStarted && nonMinesNumber === 0) {
+            console.log('winnn')
+return true
+        }
+
+        return false;
+    };
+
+    useEffect(() => {
+        console.log(nonMinesNumber)
+        if(checkWin()) {
+            setGameWinOver(true)
+        }
+    }, [nonMinesNumber]);
 
     return (
         <div>
-            {gameOver && <LoseTab reset={setRestart} completeTime={time}/>}
             <div className={style.board__header}>
-                <p>🚩{bombsCount}</p>
-            <button className={style.board__button} onClick={handleRestartButton}>
-            </button>
-            <Timer gameOver={gameOver} sendTime={setTime} gameStarted={gameStarted} restart={restart} />
+                <div className={style.board__name}>Player: {playerName}</div>
+                {gameOver && <LoseTab/>}
+                {gameWinOver && <WinTab/>}
+                <div className={style.board__menu}>
+                    <p className={style.board__flags}>🚩{bombsCount}</p>
+                    <button className={`${style.board__button} ${gameOver ? style.board__button_lose : ''} ${gameWinOver ? style.board__button_win : ''}`}
+                            onClick={handleRestartButton}>
+                    </button>
+                    <Timer gameOver={gameOver} sendTime={setTime} gameStarted={gameStarted} restart={restart}/>
+                </div>
             </div>
-            {/*<TopBar gameOver={gameOver} setTime={setTime} newTime={newTime} />*/}
-            {board.map((row, index) => {
-                return (
-                    <div className={style.board__cells} key={index}>
-                        {row.map((oneCell, indexOneCell) => {
-                            return (
-                                <Cell
-                                    key={indexOneCell}
-                                    data={oneCell}
-                                    x={index}  // передаем координаты x
-                                    y={indexOneCell}  // передаем координаты y
-                                    updateBoard={updateBoard}
-                                    flagCell={flagCell}
-                                    reset={restart}
-                                    updateFlags={updateFlags}
-                                    gameOver = {gameOver}
-                                />
-                            )
-                        })
+            {
+                board.map((row, index) => {
+                    return (
+                        <div className={style.board__cells} key={index}>
+                            {row.map((oneCell, indexOneCell) => {
+                                return (
+                                    <Cell
+                                        key={indexOneCell}
+                                        data={oneCell}
+                                        x={index}  // передаем координаты x
+                                        y={indexOneCell}  // передаем координаты y
+                                        updateBoard={updateBoard}
+                                        flagCell={flagCell}
+                                        reset={restart}
+                                        updateFlags={updateFlags}
+                                        gameOver={gameOver}
+                                    />
+                                )
+                            })
 
-                        }
+                            }
 
-                    </div>
-                )
-            })
+                        </div>
+                    )
+                })
             }
         </div>
     )

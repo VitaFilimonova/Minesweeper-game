@@ -2,7 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 import {useEffect} from "react";
 
 const initialState = {
-    playerName: localStorage.getItem("playerName") || localStorage.setItem("playerName", "anonymous"),
+    // playerName: localStorage.getItem("playerName") || localStorage.setItem("playerName", "anonymous"),
     error: '',
     playMode: 'easy',
 }
@@ -11,11 +11,11 @@ export const leadersSlice = createSlice({
     name: 'leaders',
     initialState,
     reducers: {
-        updateName: (state, action) => {
-            state.playerName = action.payload.playerName.trim();
-            localStorage.setItem("playerName", JSON.stringify(state.playerName));
-
-        },
+        // updateName: (state, action) => {
+        //     state.playerName = action.payload.playerName.trim();
+        //     localStorage.setItem("playerName", JSON.stringify(state.playerName));
+        //
+        // },
 
         updateValues: (state, action) => {
             // Заменяем текущее состояние новыми данными
@@ -36,4 +36,4 @@ export const leadersSlice = createSlice({
         },
     },
 })
-export const {updateName, updateValues, setError} = leadersSlice.actions;
+export const { updateValues, setError} = leadersSlice.actions;

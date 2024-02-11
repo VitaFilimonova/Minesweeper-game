@@ -2,8 +2,7 @@ import React from 'react';
 import style from './LoseTab.module.scss'
 const LoseTab = () => {
     return (
-        <div>
-
+        <div className={style.lose__tab}>
             You lose, try again
         </div>
     );

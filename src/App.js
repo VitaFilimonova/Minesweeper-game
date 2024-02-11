@@ -10,18 +10,27 @@ import {Link, Route, Routes, useLocation, useNavigate} from "react-router-dom";
 
 
 function App() {
-    const playerNames = useSelector((state) => state.playerName)
+    const playerName = useSelector((state) => state.playerNameReducer.playerName)
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const [isLeadersOpen, setIsLeadersOpen] = useState(false);
-    const [isNameOpen, setIsNameOpen] = useState(true);
+    const [isNameOpen, setIsNameOpen] = useState(false);
+    const [isNameModalOpen, setIsNameModalOpen] = useState(false);
 
-    // useEffect(() => {
-    //     // console.log(playerNames)
-    //     // console.log('l;l')
-    //     // if (playerName !== 'anonymous' && playerName !== undefined) {
-    //     //     setIsNameOpen(false)
-    //     // }
-    // }, [playerNames]);
+    useEffect(() => {
+        console.log(playerName)
+        // console.log('l;l')
+        // if (playerName !== 'anonymous' && playerName !== undefined) {
+        //     setIsNameOpen(false)
+        // }
+    }, [playerName]);
+
+
+    useEffect(() => {
+        // Если имя пользователя "anonymous", то открываем модальное окно для ввода имени
+        if (playerName === 'anonymous') {
+            setIsNameModalOpen(true);
+        }
+    }, [playerName]);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -31,13 +40,12 @@ function App() {
     return (
         <div className="App">
             <div className="App__container">
-                <NameTab/>
+                {isNameModalOpen && <NameTab open={true} setOpen={setIsNameModalOpen}/> }
                 <h1 className="App__header">💣Minesweeper💣</h1>
                 <div className="App__buttons">
                     <button className="App__button" onClick={() => setIsSettingsOpen(true)}>Settings</button>
                     {isSettingsOpen && <SettingsTab open={true} setOpen={setIsSettingsOpen}/>}
-                    {/*<button className="App__button" onClick={() => setIsLeadersOpen(true)}>Leaders</button>*/}
-                    {/*{isLeadersOpen && <LeadersTab open={true} setOpen={setIsLeadersOpen}/>}*/}
+
                     <Link to={'/leaders'} className="App__button"
                           state={{modal: true}}>
                         Leaders
@@ -45,10 +53,7 @@ function App() {
                     <button className="App__button" onClick={() => setIsNameOpen(true)}>Change name</button>
                     {isNameOpen && <NameTab open={true} setOpen={setIsNameOpen}/>}
                 </div>
-                {/*<Routes>*/}
-                {/*    <Route path="/" element={<Board/>}/>*/}
-                {/*    /!*<Route path="/leaders" element={<LeadersTab />} />*!/*/}
-                {/*</Routes>*/}
+
                 <Board/>
                 {isModalOpen && (
                     <Routes>

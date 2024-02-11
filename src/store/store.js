@@ -1,6 +1,7 @@
 import {configureStore} from '@reduxjs/toolkit'
-import {leadersSlice} from "./reducers/LeadersSlice";
-import {boardSizeSlice} from "./reducers/BoardSizeSlice";
+import {leadersSlice} from "./reducers/leadersSlice";
+import {boardSizeSlice} from "./reducers/boardSizeSlice";
+import {playerNameSlice} from "./reducers/playerNameSlice";
 // import {valuesApi} from "../services/ValuesServices";
 
 export const store = configureStore({
@@ -8,6 +9,7 @@ export const store = configureStore({
         // [valuesApi.reducerPath]: valuesApi.reducer,
         valuesReducer: leadersSlice.reducer,
         boardSizeReducer: boardSizeSlice.reducer,
+        playerNameReducer: playerNameSlice.reducer,
 
     },
     // middleware: (getDefaultMiddleware) =>

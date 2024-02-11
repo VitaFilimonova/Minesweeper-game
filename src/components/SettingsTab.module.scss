@@ -68,6 +68,10 @@ font-size: clamp(20px,3vw ,40px);
     }
   }
 
+  &__error {
+    color: red;
+  }
+
   &__customTab {
     display: none;
     flex-direction: column;

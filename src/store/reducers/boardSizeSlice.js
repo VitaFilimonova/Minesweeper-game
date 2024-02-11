@@ -19,20 +19,6 @@ export const boardSizeSlice = createSlice({
             state.mode = action.payload.mode
         },
 
-        // updateValues: (state, action) => {
-        // Заменяем текущее состояние новыми данными
-
-        // state.co2 = Math.ceil(action.payload.co2);
-        // if (!isNaN(state.temp)) {
-        //     // Округляем temp до одного знака после запятой
-        //     state.temp = state.temp.toFixed(1);
-        // }
-        // state.temp > 27
-        //     ? state.tempError = true
-        //     : state.tempError = false
-
-        // },
-
         setError: (state, action) => {
             state.error = action.payload;
         },

@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import style from './SettingsTab.module.scss';
 import {useDispatch, useSelector} from "react-redux";
-import {boardSizeSlice, updateBoard} from "../store/reducers/BoardSizeSlice";
+import {boardSizeSlice, updateBoard} from "../store/reducers/boardSizeSlice";
 
 const MAX_ROWS = 32;
+const MIN_ROWS = 3;
 const MAX_COLUMNS = 16;
-const MAX_MINES = 100;
+const MIN_COLUMNS = 3;
+const MAX_MINES = MAX_ROWS * MAX_COLUMNS;
+const MIN_MINES = 1;
 const SettingsTab = ({open, setOpen}) => {
 
     const [showCustomTab, setShowCustomTab] = useState(false)
@@ -13,6 +16,7 @@ const SettingsTab = ({open, setOpen}) => {
     const [difficulty, setDifficulty] = useState({rows: width, cols: height, mines: minesNumber})
     const dispatch = useDispatch()
     const [selectedButton, setSelectedButton] = useState(mode); // Состояние для хранения выбранной кнопки
+    const [errors, setErrors] = useState({rows: '', cols: '', mines: ''});
     const buttonsData = [
         {name: 'easy', text: 'Easy 8×8, 10 mines', params: {rows: 8, cols: 8, mines: 10}},
         {name: 'normal', text: 'Normal 16×16, 40 mines', params: {rows: 16, cols: 16, mines: 30}},
@@ -22,18 +26,22 @@ const SettingsTab = ({open, setOpen}) => {
 
     useEffect(() => {
         const updatedBoardSize = {
-            rows: difficulty.rows,
-            columns: difficulty.cols,
-            minesNumber: difficulty.mines,
+            rows: difficulty.rows === '' ? 3 : difficulty.rows,
+            columns: difficulty.cols === '' ? 3 : difficulty.cols,
+            minesNumber: difficulty.mines === '' ? 1 : difficulty.mines,
             mode: selectedButton
         };
-        dispatch(updateBoard(updatedBoardSize));
-        console.log(difficulty)
-        console.log(width, height, minesNumber, mode)
+        // Перед диспатчем проверьте, что все значения не пустые
+        if (updatedBoardSize.rows && updatedBoardSize.columns && updatedBoardSize.minesNumber) {
+            dispatch(updateBoard(updatedBoardSize));
+        }
+        // dispatch(updateBoard(updatedBoardSize));
+        // console.log(difficulty)
+        // console.log(width, height, minesNumber, mode)
     }, [difficulty, selectedButton]);
 
     function setDifficultyLevel(param) {
-        setDifficulty({rows: param.rows, cols:  param.cols, mines: param.mines})
+        setDifficulty({rows: param.rows, cols: param.cols, mines: param.mines})
     }
 
 
@@ -48,7 +56,34 @@ const SettingsTab = ({open, setOpen}) => {
     };
 
     const setDifficultyParam = (param, value) => {
-        setDifficulty(prevState => ({...prevState, [param]: value}));
+        // const newValue = value === '' ? '' : Math.max(3, Number(value));
+
+
+        // Определяем пределы для каждого параметра
+        const limits = {
+            rows: { min: 3, max: MAX_ROWS },
+            cols: { min: 3, max: MAX_COLUMNS },
+            mines: { min: 1, max: MAX_MINES },
+        };
+        const numValue = value === '' ? '' : Number(value);
+        // Проверяем валидность значения
+        if ( numValue < limits[param].min || numValue > limits[param].max) {
+            // Устанавливаем сообщение об ошибке для соответствующего параметра
+            setErrors(prevErrors => ({ ...prevErrors, [param]: `Value must be between ${limits[param].min} and ${limits[param].max}` }));
+            setDifficulty(prevState => ({ ...prevState, [param]: numValue }));
+        }
+
+        else {
+            // Если значение валидно, обновляем состояние и сбрасываем ошибку
+            setDifficulty(prevState => ({ ...prevState, [param]: numValue }));
+            setErrors(prevErrors => ({ ...prevErrors, [param]: '' }));
+        }
+
+
+        // setDifficulty(prevState => ({
+        //     ...prevState,
+        //     [param]: newValue
+        // }));
     };
 
     return (

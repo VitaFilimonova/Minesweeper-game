@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import style from './NameTab.module.scss'
 import {useDispatch, useSelector} from "react-redux";
-import {updateName} from "../store/reducers/LeadersSlice";
+import {updateName} from "../store/reducers/playerNameSlice";
 
 const NameTab = ({open, setOpen}) => {
     const [name, setName] = useState('')
     const [nameError, setNameError] = useState(false)
     // const [open, setOpen] = useState(true)
-    const player = useSelector((state) => state.playerName)
+    const player = useSelector((state) => state.playerNameReducer.playerName)
     const dispatch = useDispatch()
 
     function savePlayer() {
@@ -16,12 +16,16 @@ const NameTab = ({open, setOpen}) => {
     }
 
     useEffect(() => {
-        if ( name.length > 30) {
+        if ( name.length > 30 || name.trim() === '') {
             setNameError(true)
         } else {
             setNameError(false)
         }
     }, [name]);
+
+    useEffect(() => {
+        console.log(player)
+    }, [player]);
 
     return (
         <div className={`${style.name__tab} ${open ? style.name__tab_open : ''}`}>
@@ -35,7 +39,7 @@ const NameTab = ({open, setOpen}) => {
                     <p className={style.name__error}>Invalid name, please try again</p>
                 }
                 <button className={style.name__buttonSave} onClick={savePlayer}
-                        disabled={!name || name.length > 30}>Save
+                        disabled={!name || name.trim() === '' || name.length > 30}>Save
                 </button>
             </div>
         </div>
