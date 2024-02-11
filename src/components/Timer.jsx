@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import style from './Timer.module.scss'
 const Timer = ({ gameOver, sendTime }) => {
     let [time, setTime] = useState(0);
     let [sTime, setSTime] = useState(0);
@@ -28,11 +28,11 @@ const Timer = ({ gameOver, sendTime }) => {
     }, [time, setTime, gameOver, sendTime]);
 
     return (
-        <div style={{ color: "white", fontSize: 20 }}>
-      <span role="img" aria-label="clock" style={{ paddingRight: 10 }}>
-        ⏰
-      </span>
-            {gameOver ? sTime : time}
+        <div className={style.timer} >
+<span className={style.timer__img}>
+    ⏰
+</span>
+        {gameOver ? sTime : time}
         </div>
     );
 };

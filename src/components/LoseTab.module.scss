@@ -1,0 +1,8 @@
+@use './SettingsTab.module' as SettingsTab;
+@import './../App';
+
+.lose {
+  &__tab {
+    @include SettingsTab.overlay;
+  }
+}

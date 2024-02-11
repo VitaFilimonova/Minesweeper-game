@@ -1,1 +1,15 @@
 @import './../App';
+
+
+.timer {
+  color: $global-white;
+  font-size: clamp(22px,3vw,42px);
+  width: clamp(60px,11vw,100px);
+  display: flex;
+  align-items: center;
+
+  &__img {
+    padding-right: 5px;
+    font-size: clamp(20px,3vw,40px);
+  }
+}

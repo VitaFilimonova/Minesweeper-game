@@ -1,9 +1,10 @@
 import React from 'react';
-
+import style from './LoseTab.module.scss'
 const LoseTab = () => {
     return (
         <div>
-            haha
+
+            You lose, try again
         </div>
     );
 };

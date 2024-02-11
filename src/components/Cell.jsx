@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import style from './Cell.module.scss'
+import {updateName} from "../store/reducers/LeadersSlice";
 
-const Cell = ({data, x, y, updateBoard, flagCell, reset}) => {
+const Cell = ({data, x, y, updateBoard, flagCell, reset, updateFlags}) => {
     const {revealed, value, flagged} = data;
 
     const [cellState, setCellState] = useState("hidden"); // Состояние клетки: "hidden", "flagged", "questionMark"
@@ -14,7 +15,6 @@ const Cell = ({data, x, y, updateBoard, flagCell, reset}) => {
         if (data.flagged) {
             return;
         }
-        console.log(e.type);
         updateBoard(x, y);
     };
     const handleRightClick = (e) => {
@@ -26,11 +26,11 @@ const Cell = ({data, x, y, updateBoard, flagCell, reset}) => {
                     setCellState("flagged");
                     break;
                 case "flagged":
-                    flagCell(x, y, "questionMark");
+                    flagCell(x, y);
                     setCellState("questionMark");
                     break;
                 case "questionMark":
-                    flagCell(x, y, null);
+                    // flagCell(x, y);
                     setCellState("hidden");
                     break;
                 default:

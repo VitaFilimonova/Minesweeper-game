@@ -17,8 +17,9 @@ const Board = () => {
     useEffect(() => {
         const generateBoard = () => {
             const getBoard = createBoard();
-            // setNonMinesCount(100 - 20);
+            setNonMinesNumber(rows*columns - minesNumber);
             setTime(0);
+            setFlagsCount(0)
             setBoard(getBoard.newBoard);
             setMines(getBoard.mines);
             setGameOver(false);
@@ -133,6 +134,7 @@ const Board = () => {
     const updateBoard = (row, col, e) => {
         let newBoardValues = JSON.parse(JSON.stringify(board));
         let newNonMinesNumber = nonMinesNumber;
+
         if (newBoardValues[row][col].value === "X") {
             for (let i = 0; i < mines.length; i++) {
                 if (!newBoardValues[mines[i][0]][mines[i][1]].revealed) {
@@ -142,6 +144,7 @@ const Board = () => {
             setGameOver(true);
         } else {
             newBoardValues = revealed(newBoardValues, row, col, newNonMinesNumber);
+
             if (!newBoardValues) {
                 return;
             }
@@ -151,18 +154,45 @@ const Board = () => {
     };
 
 
-    const flagCell = (row, col) => {
-        let newBoardValues = JSON.parse(JSON.stringify(board));
-        newBoardValues[row][col].flagged = !newBoardValues[row][col].flagged;
-        setBoard(newBoardValues);
+
+    const [flagsCount, setFlagsCount] = useState(0);
+    const [bombsCount, setBombsCount] = useState(minesNumber- flagsCount);
+
+    useEffect(() => {
+
+        console.log(flagsCount)
         console.log(board)
+
+    }, [flagsCount, setFlagsCount]);
+    useEffect(() => {
+        setBombsCount(minesNumber-flagsCount)
+    }, [flagsCount, minesNumber,setFlagsCount]);
+    const flagCell = (row, col) => {
+        setBoard(prevBoard => {
+            // Копируем доску для иммутабильного обновления
+            const newBoard = JSON.parse(JSON.stringify(prevBoard));
+
+            // Обновляем состояние флага для клетки
+            newBoard[row][col].flagged = !newBoard[row][col].flagged;
+
+            // Подсчитываем новое количество флагов
+            const newFlagsCount = newBoard.flat().filter(cell => cell.flagged).length;
+            setFlagsCount(newFlagsCount);
+
+            // Возвращаем обновленную доску
+            return newBoard;
+        });
+    };
+
+    const updateFlags = (flagged) => {
+        setFlagsCount(prevFlagsCount =>  prevFlagsCount - 1);
     };
 
     return (
         <div>
             {gameOver && <LoseTab reset={setRestart} completeTime={time}/>}
             <div className={style.board__header}>
-                <p>💥{}</p>
+                <p>🚩{bombsCount}</p>
             <button className={style.board__button} onClick={() => setRestart(true)}>
             </button>
             <Timer gameOver={gameOver} sendTime={setTime}/>
@@ -181,6 +211,7 @@ const Board = () => {
                                     updateBoard={updateBoard}
                                     flagCell={flagCell}
                                     reset={restart}
+                                    updateFlags={updateFlags}
                                 />
                             )
                         })

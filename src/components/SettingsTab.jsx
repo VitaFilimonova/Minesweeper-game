@@ -73,12 +73,12 @@ const SettingsTab = ({open, setOpen}) => {
                                onChange={(event) => setDifficultyParam('rows', event.target.value)}/>
                     </div>
 
-                    <div>Columns:
+                    <div className={style.difficulty__params}>Columns:
                         <input className={style.difficulty__input} type='number'
                                value={difficulty.cols}
                                onChange={(event) => setDifficultyParam('cols', event.target.value)}/>
                     </div>
-                    <div>Mines:
+                    <div className={style.difficulty__params}>Mines:
                         <input className={style.difficulty__input} type='number'
                                value={difficulty.mines}
                                onChange={(event) => setDifficultyParam('mines', event.target.value)}/>
