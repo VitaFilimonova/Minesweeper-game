@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import style from './Cell.module.scss'
 import {updateName} from "../store/reducers/LeadersSlice";
 
-const Cell = ({data, x, y, updateBoard, flagCell, reset, updateFlags}) => {
+const Cell = ({data, x, y, updateBoard, flagCell, reset, updateFlags, gameOver}) => {
     const {revealed, value, flagged} = data;
 
     const [cellState, setCellState] = useState("hidden"); // Состояние клетки: "hidden", "flagged", "questionMark"
@@ -12,7 +12,7 @@ const Cell = ({data, x, y, updateBoard, flagCell, reset, updateFlags}) => {
     }, [reset]);
     const handleClick = (e) => {
         // e.preventDefault();
-        if (data.flagged) {
+        if (data.flagged || gameOver) {
             return;
         }
         updateBoard(x, y);
@@ -74,7 +74,9 @@ const Cell = ({data, x, y, updateBoard, flagCell, reset, updateFlags}) => {
         >
 
             {data.revealed ? (
-                data.value === "X" ? (
+                data.exploded ? (
+                    "💥" // Отображение взорванной бомбы
+                ) : data.value === "X" ? (
                     "💣"
                 ) : (
                     data.value === 0 ? "" : data.value

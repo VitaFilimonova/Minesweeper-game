@@ -14,6 +14,9 @@ const Board = () => {
     const [gameOver, setGameOver] = useState(false);
     const {rows, columns, minesNumber} = useSelector((state) => state.boardSizeReducer)
     const [time, setTime] = useState(0);
+    const [gameStarted, setGameStarted] = useState(false);
+
+
     useEffect(() => {
         const generateBoard = () => {
             const getBoard = createBoard();
@@ -37,6 +40,7 @@ const Board = () => {
                 row: rowIndex,
                 column: colIndex,
                 flagged: false,
+                exploded: false
             }))
         );
 
@@ -135,12 +139,22 @@ const Board = () => {
         let newBoardValues = JSON.parse(JSON.stringify(board));
         let newNonMinesNumber = nonMinesNumber;
 
+        if (!gameOver && !gameStarted) {
+            setGameStarted(true); // Начинаем игру при первом открытии клетки
+        }
+
         if (newBoardValues[row][col].value === "X") {
-            for (let i = 0; i < mines.length; i++) {
-                if (!newBoardValues[mines[i][0]][mines[i][1]].revealed) {
-                    newBoardValues[mines[i][0]][mines[i][1]].revealed = true;
-                }
-            }
+            newBoardValues[row][col].exploded = true;
+            // Перебираем все клетки
+            newBoardValues.forEach((boardRow, rowIndex) => {
+                boardRow.forEach((cell, colIndex) => {
+                    // Открываем только клетки с бомбами
+                    if (cell.value === "X") {
+                        newBoardValues[rowIndex][colIndex].revealed = true;
+                    }
+                });
+            });
+            setBoard(newBoardValues)
             setGameOver(true);
         } else {
             newBoardValues = revealed(newBoardValues, row, col, newNonMinesNumber);
@@ -188,14 +202,21 @@ const Board = () => {
         setFlagsCount(prevFlagsCount =>  prevFlagsCount - 1);
     };
 
+   function handleRestartButton () {
+       setRestart(true)
+       setGameOver(false);
+       setGameStarted(false); // Сбрасываем флаг начала игры
+       // setRestart(prev => !prev);
+   }
+
     return (
         <div>
             {gameOver && <LoseTab reset={setRestart} completeTime={time}/>}
             <div className={style.board__header}>
                 <p>🚩{bombsCount}</p>
-            <button className={style.board__button} onClick={() => setRestart(true)}>
+            <button className={style.board__button} onClick={handleRestartButton}>
             </button>
-            <Timer gameOver={gameOver} sendTime={setTime}/>
+            <Timer gameOver={gameOver} sendTime={setTime} gameStarted={gameStarted} restart={restart} />
             </div>
             {/*<TopBar gameOver={gameOver} setTime={setTime} newTime={newTime} />*/}
             {board.map((row, index) => {
@@ -212,6 +233,7 @@ const Board = () => {
                                     flagCell={flagCell}
                                     reset={restart}
                                     updateFlags={updateFlags}
+                                    gameOver = {gameOver}
                                 />
                             )
                         })

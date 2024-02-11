@@ -53,6 +53,8 @@ body {
     font-size: clamp(20px, 3vw, 60px);
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     gap: 10px;
   }
 

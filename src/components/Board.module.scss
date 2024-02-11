@@ -9,13 +9,13 @@ display: flex;
   }
 
   &__button {
-    width: 50px;
-    height: 50px;
+    width: clamp(50px,6vw,70px);
+    height: clamp(50px,6vw,70px);
     display: flex;
     justify-content: center;
     align-items: center;
     background-image: url("./../images/emogi_smile.svg");
-    background-size: 100px 100px; /* Размер картинки будет равен размеру кнопки */
+    background-size: clamp(100px,15vw,120px) clamp(100px,15vw,120px); /* Размер картинки будет равен размеру кнопки */
     background-repeat: no-repeat; /* Запрет повторения фоновой картинки */
     background-position: center;
 

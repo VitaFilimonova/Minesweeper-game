@@ -1,38 +1,41 @@
 import React, { useState, useEffect } from "react";
 import style from './Timer.module.scss'
-const Timer = ({ gameOver, sendTime }) => {
+const Timer = ({ gameOver, sendTime, gameStarted, restart }) => {
     let [time, setTime] = useState(0);
-    let [sTime, setSTime] = useState(0);
-    let timeIntervalId;
 
+    // Эффект для отслеживания старта игры и обновления таймера
     useEffect(() => {
-        if (time > 0 && gameOver) {
-            setSTime(time);
-            setTime(0);
-        }
-    }, [gameOver, time]);
+        let timeIntervalId;
 
+        if (gameStarted && !gameOver) {
+            timeIntervalId = setInterval(() => {
+                setTime(prevTime => prevTime + 1);
+            }, 1000);
+        }
+
+        // Очистка таймера
+        return () => clearInterval(timeIntervalId);
+    }, [gameStarted, gameOver]);
+
+    // Эффект для сброса таймера при рестарте
     useEffect(() => {
-        const incrementTime = () => {
-            let newTime = time + 1;
-            setTime(newTime);
-        };
-        timeIntervalId = setTimeout(() => {
-            incrementTime();
-        }, 1000);
-        if (gameOver) {
-              // let updatedTime = JSON.parse(JSON.stringify(time));
-
-            clearInterval(timeIntervalId);
+        if (restart) {
+            setTime(0); // Сбрасываем таймер
+            sendTime(0); // Отправляем сброшенное время, если нужно
         }
-    }, [time, setTime, gameOver, sendTime]);
+    }, [restart, sendTime]);
+
+    // Эффект для отправки текущего времени во внешний стейт
+    useEffect(() => {
+        sendTime(time);
+    }, [time, sendTime]);
 
     return (
         <div className={style.timer} >
 <span className={style.timer__img}>
     ⏰
 </span>
-        {gameOver ? sTime : time}
+        { time}
         </div>
     );
 };

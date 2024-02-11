@@ -39,7 +39,8 @@ function App() {
                     {/*<button className="App__button" onClick={() => setIsLeadersOpen(true)}>Leaders</button>*/}
                     {/*{isLeadersOpen && <LeadersTab open={true} setOpen={setIsLeadersOpen}/>}*/}
                     <Link to={'/leaders'} className="App__button"
-                             state= {{modal: true}}>Leaders
+                          state={{modal: true}}>
+                        Leaders
                     </Link>
                     <button className="App__button" onClick={() => setIsNameOpen(true)}>Change name</button>
                     {isNameOpen && <NameTab open={true} setOpen={setIsNameOpen}/>}
