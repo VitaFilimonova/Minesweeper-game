@@ -57,11 +57,6 @@ body {
     align-items: center;
     gap: 10px;
   }
-
-  &__button {
-    //font-family: $global-font;
-    //font-size: clamp(20px,3vw,60px);
-  }
 }
 
 @media screen and (min-width: $screen-tab-580) {

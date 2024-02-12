@@ -1,9 +1,13 @@
 @import './../App';
 
 .board {
+  display: flex;
+  flex-direction: column;
+  //justify-content: center;
+  align-items: center;
 
   &__header {
-display: flex;
+    display: flex;
     flex-direction: column;
     gap: 5px;
     //align-items: center;
@@ -12,7 +16,7 @@ display: flex;
   }
 
   &__name {
-    font-size: clamp(15px,3vw,25px);
+    font-size: clamp(15px, 3vw, 25px);
     //display: flex;
     margin: 0 auto;
     color: $global-orange;
@@ -22,23 +26,25 @@ display: flex;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: clamp(200px,30vw,400px);
+    //max-width: 400px;
     //margin-bottom: 10px;
   }
 
   &__flags {
-    font-size: clamp(20px,3vw,40px);
+    font-size: clamp(20px, 3vw, 40px);
     display: flex;
     align-items: center;
   }
 
   &__button {
-    width: clamp(50px,6vw,70px);
-    height: clamp(50px,6vw,70px);
+    width: clamp(50px, 6vw, 70px);
+    height: clamp(50px, 6vw, 70px);
     display: flex;
     justify-content: center;
     align-items: center;
     background-image: url("./../images/emogi_smile.svg");
-    background-size: clamp(100px,15vw,120px) clamp(100px,15vw,120px); /* Размер картинки будет равен размеру кнопки */
+    background-size: clamp(100px, 15vw, 120px) clamp(100px, 15vw, 120px); /* Размер картинки будет равен размеру кнопки */
     background-repeat: no-repeat; /* Запрет повторения фоновой картинки */
     background-position: center;
 

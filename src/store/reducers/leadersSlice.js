@@ -1,11 +1,17 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {useEffect} from "react";
 
+const savedLeaders = JSON.parse(localStorage.getItem("leaders"));
+
 const initialState = {
-    // playerName: localStorage.getItem("playerName") || localStorage.setItem("playerName", "anonymous"),
     error: '',
-    playMode: 'easy',
-}
+    leaders: savedLeaders || {
+        easy: [],
+        normal: [],
+        hard: [],
+        custom: []
+    },
+};
 
 export const leadersSlice = createSlice({
     name: 'leaders',
@@ -17,18 +23,16 @@ export const leadersSlice = createSlice({
         //
         // },
 
-        updateValues: (state, action) => {
-            // Заменяем текущее состояние новыми данными
+        addLeaderResult: (state, action) => {
+            const { mode, playerName, time } = action.payload;
+            const newResult = { playerName, time };
+            const results = state.leaders[mode];
 
-            // state.co2 = Math.ceil(action.payload.co2);
-            // if (!isNaN(state.temp)) {
-            //     // Округляем temp до одного знака после запятой
-            //     state.temp = state.temp.toFixed(1);
-            // }
-            // state.temp > 27
-            //     ? state.tempError = true
-            //     : state.tempError = false
+            // Добавляем новый результат и сортируем по времени
+            const updatedResults = [...results, newResult].sort((a, b) => a.time - b.time).slice(0, 10);
 
+            state.leaders[mode] = updatedResults;
+            localStorage.setItem("leaders", JSON.stringify(state.leaders));
         },
 
         setError: (state, action) => {
@@ -36,4 +40,4 @@ export const leadersSlice = createSlice({
         },
     },
 })
-export const { updateValues, setError} = leadersSlice.actions;
+export const { addLeaderResult, setError} = leadersSlice.actions;

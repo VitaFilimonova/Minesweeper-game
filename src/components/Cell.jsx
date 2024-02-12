@@ -3,7 +3,7 @@ import style from './Cell.module.scss'
 import {updateName} from "../store/reducers/leadersSlice";
 import {useSelector} from "react-redux";
 
-const Cell = ({data, x, y, updateBoard, flagCell, reset, updateFlags, gameOver}) => {
+const Cell = ({data, x, y, updateBoard, flagCell, reset, updateFlags, gameOver, gameWinOver}) => {
     const {revealed, value, flagged} = data;
     const { mode} = useSelector((state) => state.boardSizeReducer)
     const [cellState, setCellState] = useState("hidden"); // Состояние клетки: "hidden", "flagged", "questionMark"
@@ -13,7 +13,7 @@ const Cell = ({data, x, y, updateBoard, flagCell, reset, updateFlags, gameOver})
     }, [reset,mode]);
     const handleClick = (e) => {
         // e.preventDefault();
-        if (data.flagged || gameOver) {
+        if (data.flagged || gameOver || gameWinOver) {
             return;
         }
         updateBoard(x, y);

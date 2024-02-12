@@ -1,7 +1,6 @@
 @use './SettingsTab.module' as SettingsTab;
 @import './../App';
 
-
 .leaders {
   &__tab {
     @include SettingsTab.overlay;
@@ -19,12 +18,75 @@
 
   &__content {
     @include SettingsTab.content;
+    gap: 10px;
+    min-height: 400px;
+    height: auto;
+    max-height: 700px;
+    padding: clamp(20px, 3vw, 30px);
   }
 
   &__header {
     display: flex;
     justify-content: center;
-    font-size: clamp(30px,3vw,60px);
+    font-size: clamp(30px, 3vw, 60px);
   }
 
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__button {
+    @include SettingsTab.button;
+    font-size: clamp(15px, 2vw, 30px);
+    text-transform: capitalize;
+
+    &_selected {
+      background-color: $global-second-green;
+    }
+  }
+
+  &__table {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    gap: 10px;
+    justify-content: center;
+
+    &Header {
+      display: contents;
+
+      span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        color: $global-orange;
+      }
+    }
+
+    &Content {
+      display: contents;
+
+      span {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+
+        &:nth-child(1) {
+          justify-content: center;
+        }
+
+        &:nth-child(2) {
+          justify-content: center;
+        }
+
+        &:nth-child(3) {
+          //color: $global-grey;
+          justify-content: center;
+        }
+      }
+    }
+
+  }
 }

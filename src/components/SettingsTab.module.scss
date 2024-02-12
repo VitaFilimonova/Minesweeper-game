@@ -26,6 +26,22 @@
   position: relative;
 }
 
+@mixin button {
+  background-color: $global-white;
+  padding: 8px;
+  border-radius: 3px;
+  box-shadow: $global-black 5px;
+  font-size: clamp(20px, 3vw, 40px);
+
+  &:hover {
+    background-color: $global-green;
+  }
+
+  &:active, &:focus {
+    background-color: $global-second-green;
+  }
+}
+
 .difficulty {
   &__tab {
     @include overlay;
@@ -50,22 +66,25 @@
   }
 
   &__button {
-    background-color: $global-white;
-    padding: 8px;
-    border-radius: 3px;
-    box-shadow: $global-black 5px;
-font-size: clamp(20px,3vw ,40px);
+
+    @include button;
+
+//    background-color: $global-white;
+//    padding: 8px;
+//    border-radius: 3px;
+//    box-shadow: $global-black 5px;
+//font-size: clamp(20px,3vw ,40px);
 
     &_selected {
       background-color: $global-second-green;
     }
-
-    &:hover {
-    background-color: $global-green;
-    }
-    &:active,:focus {
-      background-color: $global-second-green;
-    }
+    //
+    //&:hover {
+    //background-color: $global-green;
+    //}
+    //&:active,:focus {
+    //  background-color: $global-second-green;
+    //}
   }
 
   &__error {
@@ -105,7 +124,7 @@ font-size: clamp(20px,3vw ,40px);
     background-color: $global-orange;
     padding: 5px;
     border-radius: 5px;
-    width: 80px;
+    //width: 80px;
     margin: 0 auto;
 
     &:disabled {

@@ -2,14 +2,14 @@ import React, {useState, useEffect} from "react";
 import style from './Timer.module.scss'
 import {useSelector} from "react-redux";
 
-const Timer = ({gameOver, sendTime, gameStarted, restart}) => {
+const Timer = ({gameOver,gameWinOVer, sendTime, gameStarted, restart}) => {
     let [time, setTime] = useState(0);
     const { mode} = useSelector((state) => state.boardSizeReducer)
     // Эффект для отслеживания старта игры и обновления таймера
     useEffect(() => {
         let timeIntervalId;
 
-        if (gameStarted && !gameOver) {
+        if (gameStarted && !gameOver && !gameWinOVer) {
             timeIntervalId = setInterval(() => {
                 setTime(prevTime => prevTime + 1);
             }, 1000);
@@ -17,7 +17,7 @@ const Timer = ({gameOver, sendTime, gameStarted, restart}) => {
 
         // Очистка таймера
         return () => clearInterval(timeIntervalId);
-    }, [gameStarted, gameOver]);
+    }, [gameStarted, gameOver, gameWinOVer]);
 
     // Эффект для сброса таймера при рестарте
     useEffect(() => {
