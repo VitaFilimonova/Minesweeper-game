@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/VitaFilimonova/Minesweeper-game/static/css/main.78ee6e8a.css",
-    "main.js": "/VitaFilimonova/Minesweeper-game/static/js/main.1abc37af.js",
-    "static/js/592.51a01f9a.chunk.js": "/VitaFilimonova/Minesweeper-game/static/js/592.51a01f9a.chunk.js",
-    "static/media/emogi_smile.svg": "/VitaFilimonova/Minesweeper-game/static/media/emogi_smile.5c9f79a9cf55b4d72d60.svg",
-    "static/media/emogi_sad.svg": "/VitaFilimonova/Minesweeper-game/static/media/emogi_sad.98251fdf61cb6e7f145d.svg",
-    "static/media/emogi_happy.svg": "/VitaFilimonova/Minesweeper-game/static/media/emogi_happy.18af2fda733ec925ba74.svg",
-    "index.html": "/VitaFilimonova/Minesweeper-game/index.html",
-    "main.78ee6e8a.css.map": "/VitaFilimonova/Minesweeper-game/static/css/main.78ee6e8a.css.map",
-    "main.1abc37af.js.map": "/VitaFilimonova/Minesweeper-game/static/js/main.1abc37af.js.map",
-    "592.51a01f9a.chunk.js.map": "/VitaFilimonova/Minesweeper-game/static/js/592.51a01f9a.chunk.js.map"
+    "main.css": "/Minesweeper-game/static/css/main.2325b109.css",
+    "main.js": "/Minesweeper-game/static/js/main.efea7d43.js",
+    "static/js/592.51a01f9a.chunk.js": "/Minesweeper-game/static/js/592.51a01f9a.chunk.js",
+    "static/media/emogi_smile.svg": "/Minesweeper-game/static/media/emogi_smile.5c9f79a9cf55b4d72d60.svg",
+    "static/media/emogi_sad.svg": "/Minesweeper-game/static/media/emogi_sad.98251fdf61cb6e7f145d.svg",
+    "static/media/emogi_happy.svg": "/Minesweeper-game/static/media/emogi_happy.18af2fda733ec925ba74.svg",
+    "index.html": "/Minesweeper-game/index.html",
+    "main.2325b109.css.map": "/Minesweeper-game/static/css/main.2325b109.css.map",
+    "main.efea7d43.js.map": "/Minesweeper-game/static/js/main.efea7d43.js.map",
+    "592.51a01f9a.chunk.js.map": "/Minesweeper-game/static/js/592.51a01f9a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.78ee6e8a.css",
-    "static/js/main.1abc37af.js"
+    "static/css/main.2325b109.css",
+    "static/js/main.efea7d43.js"
   ]
 }
