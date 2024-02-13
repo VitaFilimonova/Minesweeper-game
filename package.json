@@ -2,7 +2,7 @@
   "name": "game_sapper",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/VitaFilimonova/Minesweeper-game/",
+  "homepage": "https://vitafilimonova.github.io/Minesweeper-game/",
   "dependencies": {
     "@reduxjs/toolkit": "^2.1.0",
     "@testing-library/jest-dom": "^5.17.0",
