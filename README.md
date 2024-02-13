@@ -1,70 +1,47 @@
-# Getting Started with Create React App
+Minesweeper
+============
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of contents
+* [General info](#general-info)
+* [Game rules](#game-rules)
+* [Technologies](#technologies)
+* [Setup](#setup)
+* [Usage](#usage)
 
-## Available Scripts
+## General info
+This project is the popular game Minesweeper. The game has 3 difficulty levels with different number of mines and board size. You can also choose to play in your custom mode. When you first enter the game, you can write the player's name. Later you can change it. For You can also view the leaderboard for each difficulty mode. The project is adapted for different screen sizes. You can check the project using the link to GitHub Pages.
+![image](https://github.com/VitaFilimonova/Minesweeper-game/assets/114240442/ca62ca97-5ab5-4a94-8e70-e348289b5289)
 
-In the project directory, you can run:
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Game rules
+The playing field is a rectangle of cells. At the start of the game, all cells are “closed” - there is nothing on them. When the game starts, mines are placed randomly under the cells without being visible to the player.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The player can click the left mouse button on any closed cell to open it, rules for opening cells:
 
-### `npm test`
+If there is a mine in the cell, the player loses.
+If there is at least one mine in the neighboring 8 cells bordering it at least by an angle, then the cell will show the number of mines in these cells.
+The number should have a color depending on the number of mines around: 1 - blue, 2 - green, 3 - red, 4 - dark blue 5 - brown 6 - turquoise 7 - black 8 - white.
+If the first two conditions are not met, then the cell automatically opens all eight cells around it and remains empty. So the cells should open until they reach the border of the playing field, or until they come across cells with numbers under them.
+The player can right-click to place a mark on a closed cell. Available labels: “checkbox”, “question” and no label, change cyclically.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+If all fields are either open or flagged and the counter is 0, then the player wins.
 
-### `npm run build`
+## Technologies
+Project is created with:
+* SCSS
+* JavaScript
+* React
+* Redux Toolkit
+* Prettier
+	
+## Setup
+Clone this repo to your desktop and run `npm install` to install all the dependencies.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Usage
+After you clone this repo to your desktop, go to its root directory and run `npm install` to install its dependencies.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Once the dependencies are installed, you can `npm start` start to start the application. You will then be able to access it at localhost:3000.
+Or you just can open link to GitHub Pages and play there.
+Enjoy the game!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
