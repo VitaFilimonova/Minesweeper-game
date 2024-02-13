@@ -1,4 +1,4 @@
-@import './../App';
+@import '../../App';
 
 .cell {
   width: clamp(30px, 4vw, 60px);
@@ -16,9 +16,4 @@
     font-size: clamp(20px, 3vw, 40px);
     background-color: $global-green;
   }
-}
-
-.bomb {
-  width: 5px;
-  height: 6px;
 }

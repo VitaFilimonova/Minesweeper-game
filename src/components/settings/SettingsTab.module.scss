@@ -1,4 +1,4 @@
-@import './../App';
+@import '../../App';
 
 @mixin overlay {
   position: fixed;
@@ -17,7 +17,6 @@
   flex-direction: column;
   gap: 20px;
   background: $global-white;
-  //padding: 20px;
   padding: clamp(30px, 3vw, 50px);
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -58,37 +57,24 @@
   }
 
   &__content {
-@include content;
+    @include content;
     min-height: 280px;
-    //height: clamp(300px, 80%, 400px);
     height: auto;
     max-height: 700px;
   }
 
   &__button {
-
     @include button;
-
-//    background-color: $global-white;
-//    padding: 8px;
-//    border-radius: 3px;
-//    box-shadow: $global-black 5px;
-//font-size: clamp(20px,3vw ,40px);
 
     &_selected {
       background-color: $global-second-green;
     }
-    //
-    //&:hover {
-    //background-color: $global-green;
-    //}
-    //&:active,:focus {
-    //  background-color: $global-second-green;
-    //}
   }
 
   &__error {
-    color: red;
+    color: $global-red;
+    font-size: 10px;
+    font-family: $global-font-second;
   }
 
   &__customTab {
@@ -107,8 +93,7 @@
     display: flex;
     align-items: center;
     font-family: $global-font-second;
-    //font-weight: 800;
-    font-size: clamp(10px,2vw,30px);
+    font-size: clamp(10px, 2vw, 30px);
   }
 
   &__input {
@@ -124,8 +109,8 @@
     background-color: $global-orange;
     padding: 5px;
     border-radius: 5px;
-    //width: 80px;
-    margin: 0 auto;
+    margin: 10px auto 0;
+    font-size: clamp(20px, 2vw, 40px);
 
     &:disabled {
       background-color: rgba(0, 0, 0, 0.15);

@@ -1,5 +1,5 @@
-@use './SettingsTab.module' as SettingsTab;
-@import './../App';
+@use 'SettingsTab.module' as SettingsTab;
+@import '../../App';
 
 .name {
   &__tab {
@@ -21,12 +21,10 @@
     gap: 15px;
     width: clamp(200px, 60%, 300px);
     min-height: 168px;
-    //height: clamp(300px, 80%, 400px);
     height: auto;
     max-height: 400px;
     padding: clamp(20px, 2vw, 30px);
-    font-size: clamp(20px, 3vw, 28px);;
-    //justify-content: space-between;
+    font-size: clamp(20px, 3vw, 28px);
   }
 
   &__error {
@@ -40,7 +38,7 @@
     background-color: $global-third-yellow;
     padding: 8px;
     border-radius: 5px;
-    font-size: clamp(15px,2vw,25px);
+    font-size: clamp(15px, 2vw, 25px);
   }
 
   &__buttonSave {

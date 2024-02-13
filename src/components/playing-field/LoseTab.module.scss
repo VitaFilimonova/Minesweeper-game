@@ -1,13 +1,14 @@
-@import './../App';
+@use '../settings/SettingsTab.module' as SettingsTab;
+@import '../../App';
 
-.win {
+.lose {
   &__tab {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: $global-white;
+    color: $global-red;
     font-size: clamp(20px, 3vw, 40px);
     padding: 5px;
-    border: 5px solid $global-white;
+    border: 5px solid $global-red;
   }
 }

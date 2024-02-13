@@ -1,5 +1,5 @@
-@use './SettingsTab.module' as SettingsTab;
-@import './../App';
+@use 'SettingsTab.module' as SettingsTab;
+@import '../../App';
 
 .leaders {
   &__tab {
@@ -82,11 +82,9 @@
         }
 
         &:nth-child(3) {
-          //color: $global-grey;
           justify-content: center;
         }
       }
     }
-
   }
 }

@@ -1,33 +1,22 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {useEffect} from "react";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    playerName: localStorage.getItem("playerName") || "anonymous",
-    error: '',
+  playerName: localStorage.getItem("playerName") || "anonymous",
+  error: "",
 };
 
-// Проверяем, установлено ли уже имя игрока в localStorage, если нет — устанавливаем "anonymous"
+// Check whether the player’s name is already set in localStorage, if not, set it to “anonymous”
 if (!localStorage.getItem("playerName")) {
-    localStorage.setItem("playerName", "anonymous");
+  localStorage.setItem("playerName", "anonymous");
 }
-
-
 export const playerNameSlice = createSlice({
-    name: 'player',
-    initialState,
-    reducers: {
-        updateName: (state, action) => {
-
-            state.playerName = action.payload.playerName.trim() ;
-            localStorage.setItem("playerName", JSON.stringify(state.playerName));
-
-
-        },
-
-
-        setError: (state, action) => {
-            state.error = action.payload;
-        },
+  name: "player",
+  initialState,
+  reducers: {
+    updateName: (state, action) => {
+      state.playerName = action.payload.playerName.trim();
+      localStorage.setItem("playerName", state.playerName);
     },
-})
-export const {updateName, updateValues, setError} = playerNameSlice.actions;
+  },
+});
+export const { updateName } = playerNameSlice.actions;

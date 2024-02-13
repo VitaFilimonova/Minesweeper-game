@@ -1,23 +1,19 @@
-@import './../App';
+@import '../../App';
 
 .board {
   display: flex;
   flex-direction: column;
-  //justify-content: center;
   align-items: center;
 
   &__header {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    //align-items: center;
-    //justify-content: space-between;
     margin-bottom: 10px;
   }
 
   &__name {
     font-size: clamp(15px, 3vw, 25px);
-    //display: flex;
     margin: 0 auto;
     color: $global-orange;
   }
@@ -26,9 +22,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: clamp(200px,30vw,400px);
-    //max-width: 400px;
-    //margin-bottom: 10px;
+    width: clamp(200px, 30vw, 400px);
   }
 
   &__flags {
@@ -43,22 +37,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url("./../images/emogi_smile.svg");
-    background-size: clamp(100px, 15vw, 120px) clamp(100px, 15vw, 120px); /* Размер картинки будет равен размеру кнопки */
-    background-repeat: no-repeat; /* Запрет повторения фоновой картинки */
+    background-image: url("../../images/emogi_smile.svg");
+    background-size: clamp(100px, 15vw, 120px) clamp(100px, 15vw, 120px);
+    background-repeat: no-repeat;
     background-position: center;
 
     &_win {
-      background-image: url("./../images/emogi_happy.svg");
+      background-image: url("../../images/emogi_happy.svg");
     }
 
     &_lose {
-      background-image: url("./../images/emogi_sad.svg");
+      background-image: url("../../images/emogi_sad.svg");
     }
   }
 
   &__cells {
     display: flex;
   }
-
 }
